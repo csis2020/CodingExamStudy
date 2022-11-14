@@ -28,23 +28,43 @@ class Solution{
             }
         }
 
-        if(charStack.isEmpty()){
-            return true;
-        }
-        return false;
+        return charStack.isEmpty();
     }
 }
+
 //2022-11-13
 //brute-force : keep removing "abc" substring
 // Input : aabcbc <--a[abc]bc <-- [abc] : true
 // Input : abcabcababcc <-- [abc]abcababcc <-- [abc]ababcc <--ab[abc]c <-- [abc]
 
 //Time Complexity: O(N^2) <- N은 string 길이
-//Space Complexity: O(N) <- N은 string 길이
+//Space Complexity: O(N^2) <- ???? 왜인지 잘 모르겠음. 
 // Time Complexity: 매번 abc 를 찾으려면 (string size - 3) 개수만큼 찾아야함 
 //  = O(N -3) + O(N-6) + O(N-(N-9)) + O(N-(N-6)) + O(N-(N-3)) = O(N^2)
 //  => (1 + 2 + 3 + ... + (N-3) + (N-2) + (N-1) +N) = (N+1)*N/2
 //  => (3 +6 + 9 + ... + (N-9) + (N-3)) = 대충 (N+1)*N/2 /3 = (N+1)*N /6 
+
+//아래보다 코드가 훨씬 깔끔하다. leetcode 의 solution 참조 
+/*
+class Solution{
+    public boolean isValid(String s){
+        if( s == null || s.length() == 0){
+            return false;
+        }
+
+        String resultStr = "";
+        while(!s.equals(resultStr)){
+            resultStr = s;
+            s = s.replaceFirst("abc", "");
+        }
+        if(s.length() == 0){
+            return true;
+        }
+
+        return false;
+    }
+}
+*/
 /*
 class Solution {
     public boolean isValid(String s) {
