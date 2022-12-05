@@ -29,6 +29,7 @@ class Solution{
         
         for(int i = 0; i < points.length ; i++){
             int distance = getDistance(points[i]);
+            /*
             if(minPQ.size() < k){
                 minPQ.add(new int[]{distance, i});
             }else{
@@ -36,6 +37,12 @@ class Solution{
                     minPQ.remove(); //minPQ.poll();와 동일
                     minPQ.add(new int[]{distance, i});
                 }
+            }
+            */
+            //위 구현과 방식만 살짝 다르지 동일함. 
+            minPQ.add(new int[]{distance, i});
+            if(minPQ.size() > k){
+                minPQ.remove(); //minPQ.poll(); 과 동일 //PQ안에서 제일 큰값이 빠짐.
             }
         }
         int[][] result = new int[k][2];
