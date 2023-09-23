@@ -14,7 +14,7 @@
 // first half list 와 secodn half list 를 merge
 //Time Complexity: O(N)
 //Space Complexity: O(1)
-
+/*
  class Solution{
      public void reorderList(ListNode head){
         if(head == null || head.next == null || head.next.next == null){
@@ -70,19 +70,18 @@
                  firstHead = firstNext;
                  secondHead = secondNext;
              }
-         }
-         
+         }         
 
      }
  }
 
-
+*/
 //두번째 방법 
 // List<ListNode> 를 선언하고 여기에 node 들을 다 넣은후 palindrome 과 같은 방식으로 비교하면서 merge
 //Time Complexity: O(N)
 //Space Complexity: O(N)
 //아래방법 cycle 생긴다는 error 가 남.... 확인해봐야한다. 
-/*
+
 class Solution{
     public void reorderList(ListNode head){
         if(head.next == null || head.next.next == null){
@@ -104,26 +103,24 @@ class Solution{
         //end node  : 5 ->4 ->3             4->3
         //merged    :1->5->2->4->3->null,   1->4->2->3->null
         while(start <= end){ 
-            ListNode startNode = nodes.get(start); //이렇게 copy 해서 써야 한다. 
-            ListNode endNode = nodes.get(end);      // 직접 nodes.get(i) 를 사용하면 ListNode 에 cycle 에 생긴다는 에러가 남. head:Error - Found cycle in the ListNode
             if(start == end){ //Size is odd number, it is mid position
                 //reorderedHead.next = nodes.get(start);
-                reorderedHead.next = startNode;
+                reorderedHead.next = nodes.get(start);
                 reorderedHead = reorderedHead.next;
             }else{
                 //reorderedHead.next = nodes.get(start);
                 //reorderedHead.next.next = nodes.get(end);
-                reorderedHead.next = startNode;
-                reorderedHead.next.next = endNode;
+                reorderedHead.next = nodes.get(start);
+                reorderedHead.next.next = nodes.get(end);
                 reorderedHead = reorderedHead.next.next;
-                start++;
-                end--;
             }
+            start++;
+            end--;
         }
         reorderedHead.next = null; 
     }
 }
-*/
+
 
  //2022.11.04
  //Time Complexity: O(n)
@@ -174,7 +171,7 @@ class Solution{
 */
  //Time Complexity: O(n)
  //Space Complexity: O(n)
- /*
+/*
 class Solution {
     public void reorderList(ListNode head) {
         if(head == null || head.next == null){
