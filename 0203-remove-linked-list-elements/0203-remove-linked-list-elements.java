@@ -8,6 +8,9 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
+//Time Complexity: O(N)
+//Space Complexity: O(1)
+/*
 class Solution {
     public ListNode removeElements(ListNode head, int val) {
         if(head == null){
@@ -28,6 +31,28 @@ class Solution {
             }
             
         }
+        return dummyHead.next;
+    }
+}
+*/
+//Leetcode 솔루션  - 위와 유사한데 , ListNode curr 외에 ListNode prev 를 하나 더 두어서 사용했다.
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        
+        ListNode dummyHead = new ListNode();
+        dummyHead.next = head;
+        ListNode prevNode = dummyHead;
+        ListNode currNode = dummyHead.next;
+        
+        while(currNode != null){
+            if(currNode.val == val){
+                prevNode.next = currNode.next;
+            }else{
+                prevNode = currNode;
+            }
+            currNode = currNode.next;
+        }
+        
         return dummyHead.next;
     }
 }
