@@ -28,31 +28,26 @@ class Solution {
         //sum:7,10, 0, 8                        sum: 18, 8,19,9, 19,9,19,9,10, 0, 10,0, 10, 0
         //added :[]->7 ->0->8                   added:[]->8->9->9->9->0->0->0->1
         while(l1 != null || l2 != null){
-            if(l1 == null){                
-                sum = l2.val +carry;
-                carry = sum / 10;
-                sum = sum % 10;
-                l2 = l2.next;                
-            }else if(l2 == null){
-                sum = l1.val +carry;
-                carry = sum / 10;
-                sum = sum % 10;  
-                l1 = l1.next;
-            }else {
-                sum = l1.val + l2.val + carry;
-                carry = sum / 10;
-                sum = sum % 10;
-                l2 = l2.next;
-                l1 = l1.next;
-            }
-            ListNode tempNode = new ListNode(sum);
-            currNode.next = tempNode;
+            int firstNum = (l1 != null)? l1.val : 0;
+            int secondNum = (l2 != null)? l2.val : 0;
+            
+            sum = (firstNum + secondNum + carry)%10;
+            carry = (firstNum + secondNum + carry)/10;
+            
+            currNode.next = new ListNode(sum);
             currNode = currNode.next;
+            
+            if(l1 != null){                
+                l1 = l1.next;                
+            }
+            if(l2 != null){
+                l2 = l2.next;
+            }
+
         }
         
         if(carry == 1){
-            ListNode tempNode = new ListNode(1);
-            currNode.next = tempNode;
+            currNode.next = new ListNode(1);
         }
         return head.next;
     }
