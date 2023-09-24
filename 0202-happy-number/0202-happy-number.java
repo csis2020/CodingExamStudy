@@ -57,7 +57,10 @@ class Solution {
     }
 }
 */
+
 //first Solution -using HashSet . (계산결과값이 1 이 아니고, HashSet 에 이미 값이 있다면, cycle)
+//Time Complexity: O(logN)
+//Space Complexity: O(logN)  <--- 왜 logN 인지 모르겠다. 
 class Solution {
     public boolean isHappy(int n) {
         if(n <=0){
