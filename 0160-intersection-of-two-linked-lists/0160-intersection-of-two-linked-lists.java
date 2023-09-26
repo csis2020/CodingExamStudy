@@ -20,15 +20,15 @@
 // From listB: move (distB + distC) steps-> if node is null, null = headA, and then move again
 // ==>  distA + distC + distB = distB + distC + distA 
 // ==>  after move above steps, they meets the intersected node
+
+//2-pointers solution
 //Time Complexity : O(N + M) , N is size of listA, M is size of listB (두 노드가 맨끝노드에서 만날경우 2바퀴 돌고 나서 만남. 2N + 2M => O(N+M))
 //Space Complexity: O(1)
-
+/*
 public class Solution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        if(headA == null){
-            return headB;
-        }else if( headB == null){
-            return headA;
+        if(headA == null || head B == null){
+            return null;
         }
         
         ListNode currA = headA;
@@ -44,4 +44,32 @@ public class Solution {
         return currA;
     }
 }
+*/
 
+//HashSet solution
+//Time Complexity: O(N+M)
+//Space Complexity: O(N)
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        
+        if(headA == null || headB == null){
+            return null;
+        }
+        
+        Set<ListNode> nodes = new HashSet<>();
+        ListNode currA = headA;
+        ListNode currB = headB;
+        while(currA != null){
+            nodes.add(currA);
+            currA = currA.next;
+        }
+        
+        while(currB != null){
+            if(nodes.contains(currB)){
+                return currB;
+            }
+            currB = currB.next;
+        }
+        return null;
+    }
+}
