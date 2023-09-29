@@ -2,9 +2,45 @@
 //Input: s = "AABABBA", k = 1 -> output: 4
 
 //2023-09-28
-//Sliding window + HashMap (<Key, value> = <Character, Count)
+//Sliding window 방법가능 
+//  1) Sliding window + HashMap (<Key, value> = <Character, Count)
+//  2)만약 input 이 alpahbet(only lowercase, 또는 uppercase) 이면 Sliding window + int[26] 배열이용 가능 
 //- key point: 속도 개선을 위해, 매번 현재 window 내에 있는 최대반복되는 char 의 숫자를 매번 재계산하지 않고 그대로 쓰다가 (count 가 줄어드는 경우는 새로 계산하지 않고, 이전 max 값 그대로 쓰고 for문으로 계속 전진) 더 큰 count 가 나올때만 update 한다. 
 //   ==>     그 이유는 longest 를 찾는 것이기 때문에 더 작은 것은 count 해 봤자, longest 가 당연히 아니기 때문. => 즉 할 필요가 없고 시간낭비인 셈.
+
+//Time Complexity: O(N)
+//Space Complexity: O(1) - 최대 26으로 size fix
+
+//1)배열 이용하는 경우 
+class Solution{
+    public int characterReplacement(String s, int k) {
+        if(s == null || s.length() <= 0){
+            return 0;
+        }
+        
+        int[] repeatingCh = new int[26];
+        int start = 0;
+        int maxFrequency = 0;
+        int longest = 0;
+        for(int end = 0; end < s.length(); end++){
+            char ch = s.charAt(end);
+            repeatingCh[ch-'A']++;
+            maxFrequency = Math.max(maxFrequency, repeatingCh[ch-'A']);
+            int difference = end - start + 1 - maxFrequency;
+            if(difference > k){
+                ch = s.charAt(start);
+                repeatingCh[ch -'A']--;
+                start++;
+            }else{
+                longest = Math.max(longest, end - start + 1);
+            }
+        }
+        return longest;
+    }
+}
+        
+//2)HashMap 이용하는 경우 
+/*
 class Solution{
     public int characterReplacement(String s, int k) {
         if(s == null || s.length() <= 0){
@@ -37,6 +73,7 @@ class Solution{
         return longest;
     }
 }
+*/
 
 //2023-01-28
 //[idea] : alphabet 각 char 의 개수를 count 하기위한 int 배열을 선언하고
