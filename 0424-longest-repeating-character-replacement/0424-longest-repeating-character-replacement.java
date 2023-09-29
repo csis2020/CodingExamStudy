@@ -32,7 +32,8 @@ class Solution{
                 repeatingCh[ch -'A']--;
                 start++;
             }else{
-                longest = Math.max(longest, end - start + 1);
+                //longest = Math.max(longest, end - start + 1);
+                longest++;
             }
         }
         return longest;
