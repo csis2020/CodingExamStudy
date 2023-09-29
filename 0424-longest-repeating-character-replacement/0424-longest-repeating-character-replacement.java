@@ -33,7 +33,17 @@ class Solution{
                 start++;
             }else{
                 //longest = Math.max(longest, end - start + 1);
-                longest++;
+                longest++; //와...이렇게만해도 됨. else 문으로 오는 경우는 증가하는 경우 뿐임. 
+            /*
+            start 와 end 의 위치를 생각해보면 왜 이렇게 되는지 이해할 수 있음. 
+            - 매loop 돌때마다 end 는 1증가
+            - 만약 difference가 k보다 크면 start 1 증가=> window 위치가 sliding 되는 것이고
+                WINDOW 사이즈는 그대로
+            - difference 가 k보다 작거나같으면 기존대비 end 만 증가한 것이기 때문에 
+                WINDOW 사이즈가 1 커짐 
+            => 결국 else 로 들어오는 경우는 기존보다 window 사이즈가 1 커질때 일뿐
+                */
+                
             }
         }
         return longest;
