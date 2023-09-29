@@ -1,6 +1,8 @@
 
 //2023-09-28
 //Idea:  HashMap + Sliding Window => 여기서 HashMap<Value, Value 나타난횟수>
+//Time Complexity : O(N)
+//Space Complexity : O(1) , HashSet 사이즈가 2 로 고정.
 class Solution {
     public int totalFruit(int[] fruits) {
         
@@ -8,19 +10,19 @@ class Solution {
             return 0;
         }
         
-        Map<Integer, Integer> typeMap = new HashMap<>(); //<key, value> =< type, count>
+        Map<Integer, Integer> basket = new HashMap<>(); //<key, value> =< type, count>
         
         int start = 0;
         int longest = 0;
         for(int end = 0; end < fruits.length; end++){
             
-            typeMap.put(fruits[end], typeMap.getOrDefault(fruits[end],0) + 1);
+            basket.put(fruits[end], basket.getOrDefault(fruits[end],0) + 1);
             
-            while(typeMap.size() > 2){
+            while(basket.size() > 2){
                 int key = fruits[start];
-                typeMap.put(key, typeMap.get(key) - 1);
-                if(typeMap.get(key) == 0){
-                    typeMap.remove(new Integer(key));
+                basket.put(key, basket.get(key) - 1);
+                if(basket.get(key) == 0){
+                    basket.remove(key);
                 }
                 start++;
             }
