@@ -46,6 +46,7 @@ class Solution {
 //  - From previous start position to updated start , take away each value from total sum
 //Time Complexity: O(N)
 //Space Complexity: O(N) , hashMap
+/*
 class Solution {
     public int maximumUniqueSubarray(int[] nums) {
         if(nums == null || nums.length <= 0){
@@ -70,9 +71,7 @@ class Solution {
         return maxSum;
     }
 }
-
-
-    
+*/    
 
 
 
@@ -84,12 +83,32 @@ class Solution {
 //  Sum 이 아니라 longest 를 구하는 경우에는 HashMap을 쓰면, 한번에 position 을 알수 있는데
 //  HashSet 을 쓰면 start 를 하나씩 하나씩 옮기는것을 중복되는 value 를 만날때까지 하는게
 //  불필요한 동작이 된다. 
-/*
+
 class Solution {
     public int maximumUniqueSubarray(int[] nums) {
+        
+        if(nums == null || nums.length <= 0){
+            return 0;
+        }
+        
+        Set<Integer> uniqueSet = new HashSet<>();
+        int start = 0;
+        int maxSum = 0;
+        int currSum = 0;
+        for(int end = 0; end < nums.length; end++){
+            while(uniqueSet.contains(nums[end])){
+                currSum -= nums[start];
+                uniqueSet.remove(nums[start]);
+                start++;                
+            }
+            uniqueSet.add(nums[end]);
+            currSum += nums[end];
+            maxSum = Math.max(maxSum,currSum);
+        }
+        return maxSum;
     }
 }
-*/
+
 
 
 
