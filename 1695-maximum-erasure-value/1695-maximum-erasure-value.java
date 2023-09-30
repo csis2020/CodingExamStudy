@@ -10,6 +10,7 @@
 
 //Time Complexity: O(N)
 //Space Complexity: O(N) , HashMap size + prefixSum array = 2N => O(N)
+/*
 class Solution {
     public int maximumUniqueSubarray(int[] nums) {
         if(nums == null || nums.length <= 0){
@@ -37,26 +38,39 @@ class Solution {
     }
 }
 
-
-
-
-
-
-
-
-
-
+*/
 
 
 //Idea : Sliding window + HashMap<key: nums[i], value: i> 
 // To get 'sum' in each steps in for loops,
 //  - From previous start position to updated start , take away each value from total sum
-/*
+//Time Complexity: O(N)
+//Space Complexity: O(N) , hashMap
 class Solution {
     public int maximumUniqueSubarray(int[] nums) {
+        if(nums == null || nums.length <= 0){
+            return 0;
+        }
+        
+        Map<Integer, Integer> uniqueMap = new HashMap<>();
+        int start = 0;
+        int maxSum = 0;
+        int currSum = 0;
+        for(int end = 0; end < nums.length; end++){
+            if(uniqueMap.containsKey(nums[end])){
+                while(start <= uniqueMap.get(nums[end])){
+                    currSum -= nums[start];
+                    start++;
+                }
+            }
+            uniqueMap.put(nums[end], end);
+            currSum += nums[end];
+            maxSum = Math.max(maxSum, currSum);
+        }
+        return maxSum;
     }
 }
-*/
+
 
     
 
