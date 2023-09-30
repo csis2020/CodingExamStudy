@@ -14,6 +14,10 @@
  * }
  */
 //2023-09-29
+//DFS - recursive function 
+//Time Complexity: O(N) <-- 모든 노드 방문
+//Space Complexity: O(트리높이) <-- node 가 left 로만 또는 right 로만 있으면 트리높이가 O(N), balanced tree  이면 이진트리이니까 트리높이는 O(logN)
+/*
 class Solution{
     public int maxDepth(TreeNode root){
         if(root == null){
@@ -39,8 +43,41 @@ class Solution{
         return currentDepth + 1;
     }
 }
+*/
 
+//BFS - queue 이용
 
+class Solution{
+    public int maxDepth(TreeNode root){
+        if(root == null){
+            return 0;
+        }
+        
+        Queue<TreeNode> nodeQueue = new LinkedList<>();
+        nodeQueue.add(root);
+        int depth = 0;
+        int numberOfNodes = 1;
+        while(!nodeQueue.isEmpty()){
+            int count = 0;
+            int numberOfChildren = 0;
+            while(count < numberOfNodes){
+                TreeNode node = nodeQueue.remove();
+                if(node.left != null){
+                    numberOfChildren++;
+                    nodeQueue.add(node.left);
+                }
+                if(node.right != null){
+                     numberOfChildren++;
+                    nodeQueue.add(node.right);
+                }
+                count++;
+            }
+            numberOfNodes = numberOfChildren;
+            depth++;
+        }
+        return depth;
+    }
+}
 
 
  //2022-11-16
