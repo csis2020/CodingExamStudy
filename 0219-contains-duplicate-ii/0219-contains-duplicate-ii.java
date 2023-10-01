@@ -10,6 +10,7 @@
 //HashMap 
 //Time Complexity: O(N)
 //Space Complexity: O(N)
+/*
 class Solution {
     public boolean containsNearbyDuplicate(int[] nums, int k) {
         if(nums == null || nums.length <= 0){
@@ -29,17 +30,31 @@ class Solution {
         return false;
     }
 }
-
+*/
 //HashSet
 //Time Complexity: O(N)
 //Space Complexity: O(K)
-/*
+
 class Solution {
     public boolean containsNearbyDuplicate(int[] nums, int k) {
+        if(nums == null || nums.length <= 0 || k == 0){
+            return false;
+        } 
         
+        Set<Integer> duplicateSet = new HashSet<>();
+        for(int i = 0; i < nums.length; i++){
+            if(duplicateSet.contains(nums[i])){
+                return true;
+            }
+            duplicateSet.add(nums[i]);
+            if(duplicateSet.size() > k){
+                duplicateSet.remove(nums[i - k]);
+            }
+        }
+        return false;
     }
 }
-*/
+
 
 //2022-01-14
 //Time Complexity: O(N)
