@@ -3,6 +3,9 @@
 //Solution: sliding window - 그런데 unique한 alpahbet 의 개수를 fix 한 상태에서 풀수 있는 솔루션이라서 
 // 허용가능한 unique한 alpahbet 이 1개일때부터 max 개까지 for 문 돌면서 매번 sliding window 방법적용
 //
+//Time Complexity: O(N) , 정확하게는 O( N * maxUnique)인데 maxUnique 는 최대경우가 26으로 fix 된 값으로 생략가능
+//Space Complexity: O(1) 알파벳 체크하는 사이즈 26으로 fix 된 배열만 잡고 쓰므로.
+/*
 class Solution {
     public int longestSubstring(String s, int k) {
         if(s == null || s.length() <= 0) {
@@ -70,7 +73,40 @@ class Solution {
         return charSet.size();
     }
 }
+*/
+ class Solution {
+    public int longestSubstring(String s, int k) {
+      int [] alpha = new int[26];
+      char [] c = s.toCharArray();
+      
+      for(int i=0; i<c.length; i++){
+        int index = c[i]-'a';
+        alpha[index]++;
+      }
+      
+      boolean vaild = true;
+      int max = 0;
+      int start = 0;
+      for(int end =0; end<c.length; end++){
+        int index = c[end]-'a';
 
+        if(alpha[index]<k && alpha[index]>0){
+          String str = s.substring(start,end);
+          max = Math.max(max,longestSubstring(str,k));
+          start = end+1;
+          vaild = false;
+        }
+        
+      }
+      if(vaild){
+          return s.length();
+        }
+        else{
+          return Math.max(max, longestSubstring(s.substring(start),k));
+        }
+      
+    }
+  }
 //brute force -이 방법도 submit 하면 Accepted 됨. 
 //idea : for 문 2번 돌면서 [i]부터[j]까지 범위에 있는 character 들이 같은alpahbet 이 k개 이상인지 check
 //Time Complexity: O(N^2) , 같은 알파벳이 k개 이상인지 체크하는것은 늘 26개 체크해서 계산에서 제외
