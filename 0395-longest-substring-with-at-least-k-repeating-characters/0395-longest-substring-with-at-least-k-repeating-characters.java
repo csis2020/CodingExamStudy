@@ -75,15 +75,14 @@ class Solution {
 }
 */
 
-//Solution : Divide & Conquer - recursive 
-/*
+//Solution : Divide & Conquer - recursive call - leetcode 의 Solution 에 나온 방법
 class Solution {
     public int longestSubstring(String s, int k) {
         if(s == null || s.length() <= 0 || k <= 0){
             return 0;
         }
         
-        return recursiveLST(s, k);
+        return recursiveLST(s, 0, s.length() -1, k);
     }
     
     //Input: s = "aaabb", k = 3
@@ -91,62 +90,33 @@ class Solution {
     //(start,end) : (0,4)-> aaa(0,2) (4,4)
     //
     //
-    int recursiveLST(String s, int k){
+    int recursiveLST(String s, int start, int end, int k){
         
-        if(s == null || s.length() < k){
+        if(start > end ||  (end - start + 1) < k){
             return 0;
         }
         
-        char [] c = s.toCharArray();
         
         int[] countMap = new int[26];
-        for(int i = 0; i < c.length; i++){
-            //char ch = s.charAt(i);
-            countMap[c[i] - 'a']++;
+        for(int i = start; i <= end; i++){
+            char ch = s.charAt(i);
+            countMap[ch - 'a']++;
         }
         
-        for(int i = 0; i < c.length; i++){
-            //char ch = s.charAt(i);
-            if(countMap[c[i] - 'a'] < k && countMap[c[i] -'a'] > 0){
-
-                int leftLongest = recursiveLST(s.substring(0, i), k);
-                int rightLongest = recursiveLST(s.substring(i+1,c.length), k);
-                
+        for(int i = start; i <= end; i++){
+            char ch = s.charAt(i);
+            if(countMap[ch - 'a'] < k && countMap[ch -'a'] > 0){
+                int leftLongest = recursiveLST(s, start, i -1, k);
+                int rightLongest = recursiveLST(s, i +1, end, k);
                 return Math.max(leftLongest, rightLongest);
             }
         }
-        return s.length();
+        return (end - start + 1);
     }
 }
-*/
-class Solution {
-    public int longestSubstring(String s, int k) {
-        
-        if(s.length() < k){
-            return 0;
-        }
-        
-        int[] freq = new int[26];
-        int res = 0, start = 0;
-        
-        for(int i = 0; i < s.length(); ++i) {
-            freq[s.charAt(i) - 'a']++;
-        }
-        
-        boolean valid = true;
-            
-        for(int end = 0; end < s.length(); ++end){
-            if(freq[s.charAt(end) - 'a'] < k){
-                int leftRes = Math.max(res, longestSubstring(s.substring(start, end), k));
-                int rightRes = Math.max(res, longestSubstring(s.substring(end+1, s.length()), k));
-                return Math.max(leftRes, rightRes);
-            }
-        }
-        
-        return s.length();
-    }
-}
-//Discussion 에 올라온  방법 
+
+
+//leetcode Discussion 에 올라온  방법 
 //  - Divide & conquer 방법인데, submission 시 결과로 측정되는 시간은 짧긴한데 
 //    풀이 방법을 면접때 설명한다고 생각했을때 설명이 쉽지는 않은거 같다. 
 // 측정시간과는 별개로 어차피 TimeComplexity  는 O(N), Space Complexity 는 O(N) <--recursive call
