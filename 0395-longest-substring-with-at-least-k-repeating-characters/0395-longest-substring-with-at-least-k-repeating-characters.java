@@ -76,7 +76,7 @@ class Solution {
 */
 
 //Solution : Divide & Conquer - recursive 
-
+/*
 class Solution {
     public int longestSubstring(String s, int k) {
         if(s == null || s.length() <= 0 || k <= 0){
@@ -118,7 +118,7 @@ class Solution {
         return s.length();
     }
 }
-
+*/
 /*
  class Solution {
     public int longestSubstring(String s, int k) {
@@ -154,6 +154,33 @@ class Solution {
     }
   }
   */
+
+ class Solution {
+public int longestSubstring(String s, int k) {
+	char[] str = s.toCharArray();
+	return helper(str,0,s.length(),k);
+}
+private int helper(char[] str, int start, int end,  int k){
+	if (end - start < k) return 0;//substring length shorter than k.
+	int[] count = new int [26];
+	for (int i = start; i<end; i++) {
+		int idx = str[i] - 'a';
+		count[idx]++;
+	}
+	for (int i=0; i<26; i++) {
+		if (count[i] < k && count[i] > 0) { //count[i]=0 => i+'a' does not exist in the string, skip it.
+			for (int j = start; j<end; j++) {
+				if (str[j] == i+'a') {
+					int left = helper(str, start, j, k);
+					int right = helper(str, j+1, end, k);
+					return Math.max(left, right);
+				}
+			}
+		}
+	}
+	return end - start;
+}
+ }
 //brute force -이 방법도 submit 하면 Accepted 됨. 
 //idea : for 문 2번 돌면서 [i]부터[j]까지 범위에 있는 character 들이 같은alpahbet 이 k개 이상인지 check
 //Time Complexity: O(N^2) , 같은 알파벳이 k개 이상인지 체크하는것은 늘 26개 체크해서 계산에서 제외
