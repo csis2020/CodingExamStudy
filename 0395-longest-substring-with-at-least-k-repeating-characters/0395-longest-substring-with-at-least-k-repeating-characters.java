@@ -119,47 +119,46 @@ class Solution {
     }
 }
 */
-/*
- class Solution {
+class Solution {
     public int longestSubstring(String s, int k) {
-      int [] alpha = new int[26];
-      char [] c = s.toCharArray();
-      
-      for(int i=0; i<c.length; i++){
-        int index = c[i]-'a';
-        alpha[index]++;
-      }
-      
-      boolean vaild = true;
-      int max = 0;
-      int start = 0;
-      for(int end =0; end<c.length; end++){
-        int index = c[end]-'a';
-
-        if(alpha[index]<k && alpha[index]>0){
-          String str = s.substring(start,end);
-          max = Math.max(max,longestSubstring(str,k));
-          start = end+1;
-          vaild = false;
+        
+        if(s.length() < k){
+            return 0;
         }
         
-      }
-      if(vaild){
-          return s.length();
+        int[] freq = new int[26];
+        int res = 0, start = 0;
+        
+        for(int i = 0; i < s.length(); ++i) {
+            freq[s.charAt(i) - 'a']++;
         }
-        else{
-          return Math.max(max, longestSubstring(s.substring(start),k));
+        
+        boolean valid = true;
+            
+        for(int end = 0; end < s.length(); ++end){
+            if(freq[s.charAt(end) - 'a'] < k){
+                int leftRes = Math.max(res, longestSubstring(s.substring(start, end), k));
+                int rightRes = Math.max(res, longestSubstring(s.substring(end+1, s.length()), k));
+                return Math.max(leftRes, rightRes);
+            }
         }
-      
+        
+        return s.length();
     }
-  }
-  */
+}
+//Discussion 에 올라온  방법 
+//  - Divide & conquer 방법인데, submission 시 결과로 측정되는 시간은 짧긴한데 
+//    풀이 방법을 면접때 설명한다고 생각했을때 설명이 쉽지는 않은거 같다. 
+// 측정시간과는 별개로 어차피 TimeComplexity  는 O(N), Space Complexity 는 O(N) <--recursive call
+/*
 class Solution {
     public int longestSubstring(String s, int k) {
         int[] freq = new int[26];
         int res = 0, start = 0;
         
-        for(int i = 0; i < s.length(); ++i) ++freq[s.charAt(i) - 'a'];
+        for(int i = 0; i < s.length(); ++i) {
+            freq[s.charAt(i) - 'a']++;
+        }
         
         boolean valid = true;
             
@@ -174,7 +173,7 @@ class Solution {
         return valid? s.length() : Math.max(res, longestSubstring(s.substring(start), k));
     }
 }
-
+*/
 //brute force -이 방법도 submit 하면 Accepted 됨. 
 //idea : for 문 2번 돌면서 [i]부터[j]까지 범위에 있는 character 들이 같은alpahbet 이 k개 이상인지 check
 //Time Complexity: O(N^2) , 같은 알파벳이 k개 이상인지 체크하는것은 늘 26개 체크해서 계산에서 제외
