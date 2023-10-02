@@ -75,39 +75,44 @@ class Solution {
 }
 */
 
- class Solution {
+//Solution : Divide & Conquer - recursive 
+class Solution {
     public int longestSubstring(String s, int k) {
-      int [] alpha = new int[26];
-      char [] c = s.toCharArray();
-      
-      for(int i=0; i<c.length; i++){
-        int index = c[i]-'a';
-        alpha[index]++;
-      }
-      
-      boolean vaild = true;
-      int max = 0;
-      int start = 0;
-      for(int end =0; end<c.length; end++){
-        int index = c[end]-'a';
-
-        if(alpha[index]<k && alpha[index]>0){
-          String str = s.substring(start,end);
-          max = Math.max(max,longestSubstring(str,k));
-          start = end+1;
-          vaild = false;
+        if(s == null || s.length() <= 0 || k <= 0){
+            return 0;
         }
         
-      }
-      if(vaild){
-          return s.length();
-        }
-        else{
-          return Math.max(max, longestSubstring(s.substring(start),k));
-        }
-      
+        return recursiveLST(s, 0, s.length() -1, k);
     }
-  }
+    
+    //Input: s = "aaabb", k = 3
+    //countMap: [a:3][b:2]-> [a:3]
+    //(start,end) : (0,4)-> aaa(0,2) (4,4)
+    //
+    //
+    int recursiveLST(String s, int start, int end, int k){
+        
+        if(start > end ||  (end - start + 1) < k){
+            return 0;
+        }
+        
+        int[] countMap = new int[26];
+        for(int i = start; i <= end; i++){
+            char ch = s.charAt(i);
+            countMap[ch - 'a']++;
+        }
+        
+        for(int i = start; i <= end; i++){
+            char ch = s.charAt(i);
+            if(countMap[ch - 'a'] < k && countMap[ch -'a'] > 0){
+                int leftLongest = recursiveLST(s, start, i -1, k);
+                int rightLongest = recursiveLST(s, i +1, end, k);
+                return Math.max(leftLongest, rightLongest);
+            }
+        }
+        return (end - start + 1);
+    }
+}
 
 //brute force -이 방법도 submit 하면 Accepted 됨. 
 //idea : for 문 2번 돌면서 [i]부터[j]까지 범위에 있는 character 들이 같은alpahbet 이 k개 이상인지 check
