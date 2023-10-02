@@ -76,14 +76,14 @@ class Solution {
 */
 
 //Solution : Divide & Conquer - recursive 
-/*
+
 class Solution {
     public int longestSubstring(String s, int k) {
         if(s == null || s.length() <= 0 || k <= 0){
             return 0;
         }
         
-        return recursiveLST(s, 0, s.length() -1, k);
+        return recursiveLST(s, k);
     }
     
     //Input: s = "aaabb", k = 3
@@ -91,30 +91,35 @@ class Solution {
     //(start,end) : (0,4)-> aaa(0,2) (4,4)
     //
     //
-    int recursiveLST(String s, int start, int end, int k){
+    int recursiveLST(String s, int k){
         
-        if(start > end ||  (end - start + 1) < k){
+        if(s == null || s.length() < k){
             return 0;
         }
         
+        char [] c = s.toCharArray();
+        
         int[] countMap = new int[26];
-        for(int i = start; i <= end; i++){
-            char ch = s.charAt(i);
-            countMap[ch - 'a']++;
+        for(int i = 0; i < c.length; i++){
+            //char ch = s.charAt(i);
+            countMap[c[i] - 'a']++;
         }
         
-        for(int i = start; i <= end; i++){
-            char ch = s.charAt(i);
-            if(countMap[ch - 'a'] < k && countMap[ch -'a'] > 0){
-                int leftLongest = recursiveLST(s, start, i -1, k);
-                int rightLongest = recursiveLST(s, i +1, end, k);
+        for(int i = 0; i < c.length; i++){
+            //char ch = s.charAt(i);
+            if(countMap[c[i] - 'a'] < k && countMap[c[i] -'a'] > 0){
+
+                int leftLongest = recursiveLST(s.substring(0, i), k);
+                int rightLongest = recursiveLST(s.substring(i+1,c.length), k);
+                
                 return Math.max(leftLongest, rightLongest);
             }
         }
-        return (end - start + 1);
+        return s.length();
     }
 }
-*/
+
+/*
  class Solution {
     public int longestSubstring(String s, int k) {
       int [] alpha = new int[26];
@@ -148,6 +153,7 @@ class Solution {
       
     }
   }
+  */
 //brute force -이 방법도 submit 하면 Accepted 됨. 
 //idea : for 문 2번 돌면서 [i]부터[j]까지 범위에 있는 character 들이 같은alpahbet 이 k개 이상인지 check
 //Time Complexity: O(N^2) , 같은 알파벳이 k개 이상인지 체크하는것은 늘 26개 체크해서 계산에서 제외
