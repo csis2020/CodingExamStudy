@@ -11,29 +11,29 @@ class Solution {
         
         int[] length = new int[nums.length];
         int[] countMap = new int[nums.length];
-        int longest = 0;
         int countLongest = 0;
+        int longest = 0;
         Arrays.fill(length, 1);
         Arrays.fill(countMap, 1);
- 
-        for(int i = 0; i < nums.length; i++){
+        for(int i = 0; i < nums.length; i++){ // i 를 1부터 체크하면 안됨. [2,2,2,2,2] 가 4가 나오는 문제가 있음. 
+            //save max length and count of max length until current nums 
             for(int j = 0; j < i; j++){
                 if(nums[j] < nums[i]){
-                    if(length[j] + 1 > length[i]){
-                        length[i] = length[j] + 1;
-                        countMap[i] = countMap[j];
-                    }else if(length[j] + 1 == length[i]){
+                    if(length[j] + 1 == length[i]){
                         countMap[i] += countMap[j];
+                    }else if(length[j] + 1 > length[i]){ 
+                        countMap[i] = countMap[j];
+                        length[i] = length[j] + 1;
                     }
                 }
             }
+            //아래 체크 항목이 for( j = 0 ~ ) 의 바깥에 있어야 함. 
             if(longest < length[i]){
                 longest = length[i];
                 countLongest = countMap[i];
             }else if(longest == length[i]){
                 countLongest += countMap[i];
             }
-            
         }
         
         return countLongest;
