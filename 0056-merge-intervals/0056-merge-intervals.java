@@ -23,6 +23,7 @@
 //2023-10-05-- start 를 기준으로 ascending order 로 계산한 경우 
 // Time Complexity: O(NlogN) <--sorting
 // Space Complexity: O(N) <-- sorting 할때 든 메모리 
+/*
 class Solution{
     public int[][] merge(int[][] intervals){
         if(intervals == null || intervals.length <= 0){
@@ -49,26 +50,29 @@ class Solution{
         return mergedPoints.toArray(new int[mergedPoints.size()][]);
     }
 }
+*/
 
-/*
+//2023-10-05-- end 를 기준으로 descending order 로 계산한 경우 
+// Time Complexity: O(NlogN) <--sorting
+// Space Complexity: O(N) <-- sorting 할때 든 메모리 
 class Solution{
     public int[][] merge(int[][] intervals){
         if(intervals == null || intervals.length <= 0){
             return new int[0][]; //empty array
         }
         
-        Arrays.sort(intervals, (a, b)-> (a[0] - b[0])); //sorted by the start - ascending order
+        Arrays.sort(intervals, (a, b)-> (b[1] - a[1])); //sorted by the end - desscending order
 
         
         List<int[]> mergedPoints = new ArrayList<>();
         mergedPoints.add(intervals[0]);
         for(int i = 1; i < intervals.length; i++){
-            int[] point = mergedPoints.get(mergedPoints.size() -1);
-            int start = Math.max(point[0], intervals[i][0]);
-            int end = point[1]; // because of (Point[1] <= intervals[i][1])
+            int[] prevPoint = mergedPoints.get(mergedPoints.size() -1);
+            int[] currPoint = intervals[i];
+            int start = Math.max(prevPoint[0], currPoint[0]); 
+            int end = currPoint[1];//because of (prevPoint[1] >= intervals[i][1])
             if(start <= end){
-                point[0] = Math.min(point[0], intervals[i][0]);
-                point[1] = intervals[i][1]; // because of (Point[1] <= intervals[i][1])
+                prevPoint[0] = Math.min(prevPoint[0], currPoint[0]); 
             }else{
                 mergedPoints.add(intervals[i]);
             }
@@ -77,8 +81,6 @@ class Solution{
         return mergedPoints.toArray(new int[mergedPoints.size()][]);
     }
 }
-*/
-
 //2022-12-05
 //Time Complexity: O(nlogn) <--sorting
 //Space Complexity: O(n) or o(logn)
