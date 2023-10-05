@@ -22,6 +22,8 @@
 
 //2023-10-04 
 //idea: end 값을 기준으로 sorting 한뒤 겹치면 앞에 있는것 말고 뒤에 있는 것을 지우는게 확률상 최소로 지우며 non-overlapping 을 만들수 있다 =>  몰랐었음... 이걸 기억해야함. 
+//Time Complexity: O(NlogN) <-- sort time 
+//Space Complexity: O(N)<-- the space for sorting
 class Solution{
     public int eraseOverlapIntervals(int[][] intervals){
         if(intervals == null || intervals.length <= 0 || intervals[0].length <= 0){
@@ -31,8 +33,13 @@ class Solution{
         Arrays.sort(intervals, (a,b)->(a[1]-b[1]) ); //sort by 'end' element
         
         int remove = 0;
-        int prevEnd = Integer.MIN_VALUE;
-        for(int i = 0; i < intervals.length; i++){
+        //int prevEnd = Integer.MIN_VALUE;
+        //만약-2^31 <= xstart < xend <= 2^31 - 1 라고 boundary 가 정해진경우
+        // prevEnd = Integer.MIN_VALUE 로 놓고 for 문을 0 부터 시작하면 
+        //input: [[-2147483648,2147483647]] 인 경우 문제 생김. 
+        int prevEnd = intervals[0][1];
+        //for(int i = 0; i < intervals.length; i++){
+        for(int i = 1; i < intervals.length; i++){
             if(prevEnd > intervals[i][0]){
                 remove++;
             }else{
