@@ -1,5 +1,8 @@
 //2023-10-06
 //idea1: array sort 이용
+//Time Complexity: O(NlogN) <- by sorting
+//Space Complexity: O(N) <- by sorting
+/*
 class Solution{
     public int[][] kClosest(int[][] points, int k){
         if(points == null || points.length <= 0){
@@ -15,19 +18,38 @@ class Solution{
         return (point[0]*point[0] + point[1]*point[1]);
     }
 }
-
-//idea2: PriorityQueue 이용
-/*
+*/
+//idea2: PriorityQueue 이용 - size 가 k 인 max-heap 구현, 큰것을 버리기.
+//Time Complexity: O(NlogK)
+//Space Complexity: O(K)
 class Solution{
     public int[][] kClosest(int[][] points, int k){
-        if(points == null || points.length <= 0){
+        if(points == null || points.length <= 0 || points.length < k){
             return new int[0][]; //empty array
         }
         
-        PriorityQueue<
+        PriorityQueue<int[]> kClosestPQ = new PriorityQueue<>((a,b)->(dist(b)-dist(a)));//descending order
+        kClosestPQ.add(points[0]); 
+        for(int i = 1; i < points.length; i++){
+            kClosestPQ.add(points[i]);
+            if(kClosestPQ.size() > k){
+                kClosestPQ.poll();
+            }
+        }
+        
+        int[][] result = new int[k][2];
+        int count = 0;
+        while(count < k){//while(!kClosestPQ.isEmpty()){
+            result[count++] = kClosestPQ.poll();
+        }
+        return result;
+    }
+    
+    int dist(int[] point){
+        return (point[0]*point[0] + point[1]*point[1]);
     }
 }
-*/
+
 
 
 //2022-11-17
