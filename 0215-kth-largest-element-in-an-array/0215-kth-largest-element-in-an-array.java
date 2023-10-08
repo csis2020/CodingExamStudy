@@ -5,9 +5,12 @@
 //idea2: Priority Queue
 
 //Idea1: Array Sort
+//Time Complexity: O(NlogN)
+//Space Complexity: O(logn)~O(N)
+/*
 class Solution {
     public int findKthLargest(int[] nums, int k) {
-        if(nums == null || nums.length <= 0 || k < 1){
+        if(nums == null || nums.length < k || k < 1){
             return -10001;
         }
         
@@ -21,4 +24,23 @@ class Solution {
         return nums[nums.length -k];
     }
     
+}
+*/
+//Idea2: Priority Queue
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        if(nums == null || nums.length < k || k < 1){
+            return -10001;
+        }
+        
+        PriorityQueue<Integer> kthLargestPQ = new PriorityQueue<>();//default - ascending order
+        kthLargestPQ.add(nums[0]);
+        for(int i = 1; i < nums.length; i++){
+            kthLargestPQ.add(nums[i]);
+            if(kthLargestPQ.size() > k){
+                kthLargestPQ.poll();
+            }
+        }
+        return kthLargestPQ.peek();
+    }
 }
