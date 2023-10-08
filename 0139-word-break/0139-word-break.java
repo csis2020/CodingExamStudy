@@ -13,44 +13,30 @@ class Solution{
             return false;
         }
         
-        //Set<String> wordDictSet = new HashSet<>(wordDict);
-        boolean[] segmented = new boolean[s.length()+1];
-        segmented[0] = true; //it means that the word can be segemeted before '0' index;
+        boolean[] segmented = new boolean[s.length()]; // if the string can be segemeted before 'i' index, segmented[i] is true
+        //segmented[0] = true; //it means that the word can be segemeted before '0' index;
         
-        for(int i = 1; i <= s.length(); i++){
+        for(int i = 0; i < s.length(); i++){
             for(int j = 0; j < wordDict.size(); j++){
                 String word = wordDict.get(j);
-                int pos = i - word.length();
-                if(pos < 0){
+                int startPos = i - word.length() + 1;
+                if(startPos < 0){
                     continue;
                 }
                 
-                String subStr = s.substring(pos,i);
-                if(segmented[pos] && subStr.equals(word)){
-                    segmented[i] = true;
-                    break;
+                if(startPos == 0 || segmented[startPos -1]){ //if substring's start position is 0 or segmented 
+                    String subStr = s.substring(startPos,i+1);
+                    if(subStr.equals(word)){
+                        segmented[i] = true;
+                        break;
+                    }
                 }
             }
         }
         
-        return segmented[s.length()];
+        return segmented[s.length()-1];
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //2023-September-07
 // Time Complexity: O( n*m*k) : n is size of string, m is size of wordDict, k is size of substring 
