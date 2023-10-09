@@ -39,6 +39,9 @@ class Solution{
 
 //2023-10-09
 //iteratively
+//Time Complexity: O(N)
+//Space Complexity: O(1)
+/*
 class Solution{
     public ListNode reverseList(ListNode head){
         if(head == null || head.next == null){
@@ -57,7 +60,27 @@ class Solution{
         return prevNode;
     }
 }
-
+*/
+//Recursively
+class Solution{
+    public ListNode reverseList(ListNode head){
+        if(head == null || head.next == null){
+            return head;
+        }
+        
+        return recursiveReverseList(head, null);
+    }
+    
+    ListNode recursiveReverseList(ListNode currNode, ListNode prevNode){
+        if(currNode == null){
+            return prevNode;
+        }
+        
+        ListNode nextNode = currNode.next;
+        currNode.next = prevNode;
+        return recursiveReverseList(nextNode, currNode);
+    }
+}
 
  //2023.02.05
  //Time Complexity: O(N)
