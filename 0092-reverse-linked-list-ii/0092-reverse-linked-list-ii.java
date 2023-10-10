@@ -150,7 +150,7 @@ class Solution {
 //recursive solution - my idea 
 //위 처럼 전역변수를 둘꺼면, '206. Reverse Linked List' 의 방법을 이용해도 될거 같아서 그렇게 해본 내용
 class Solution {
-    ListNode after;
+    ListNode after = null;
     
     public ListNode reverseBetween(ListNode head, int left, int right) {
         
