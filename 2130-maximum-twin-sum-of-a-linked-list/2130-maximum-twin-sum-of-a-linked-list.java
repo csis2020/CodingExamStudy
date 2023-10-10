@@ -13,6 +13,33 @@
  //Time Complexity: O(N)
  //Space Complexity: O(N)
  // 더 좋은 아이디어는 아래 2번째 fast/slow 를 이용하는 방식으로 Space Complexity 가 O(1)이다. 
+
+//2023-10-10
+class Solution {
+    public int pairSum(ListNode head) {
+        if(head == null){
+            return 0;
+        }
+        
+        List<Integer> list = new ArrayList<>();
+        ListNode dummy = head;
+        while(dummy != null){
+            list.add(dummy.val);
+            dummy = dummy.next;
+        }
+        
+        int maxSum = 0;
+        int start = 0;
+        int end = list.size() -1;
+        while(start < end){
+            int sum = list.get(start) + list.get(end);
+            maxSum = Math.max(maxSum, sum);
+            start++;
+            end--;
+        }
+        return maxSum;
+    }
+}
  /*
 class Solution {
     public int pairSum(ListNode head) {
@@ -97,11 +124,14 @@ class Solution {
     }
 }
 */
+        
+//연습 
 //limitationL size of list is even? yes
 //1) find the mid position - first half of list, second half of list
 //      fast/slow pointer => start from head, fast 
 //2) reverse list for seond half of list 
 //3) find twin sum from frist half of list and second half of list 
+/*
 class Solution {
     public int pairSum(ListNode head) {
         if(head == null || head.next == null){
@@ -148,3 +178,4 @@ class Solution {
         return maxSum;
     }
 }
+*/
