@@ -8,6 +8,30 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
+
+//2023-10-13
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        if(head == null){
+            return null;
+        }
+        
+        ListNode dummy = new ListNode(0, head);
+        dummy.next = head;
+        
+        ListNode curr = dummy;
+        while(curr != null && curr.next != null){
+            if(curr.next.val == val){
+                curr.next = curr.next.next;
+            }else{
+                curr = curr.next; 
+            }
+        }
+        
+        return dummy.next;
+    }
+}
+//2023-09-23
 //Time Complexity: O(N)
 //Space Complexity: O(1)
 /*
@@ -35,7 +59,11 @@ class Solution {
     }
 }
 */
-//Leetcode 솔루션  - 위와 유사한데 , ListNode curr 외에 ListNode prev 를 하나 더 두어서 사용했다.
+//Leetcode 솔루션  - 위와 동일한데 , ListNode curr 외에 ListNode prev 를 하나 더 두어서 사용했다.
+//  이렇게 하니 코드가 더 깔끔해지네. 
+//Time Complexity: O(N)
+//Space Complexity: O(1)
+/*
 class Solution {
     public ListNode removeElements(ListNode head, int val) {
         
@@ -56,3 +84,4 @@ class Solution {
         return dummyHead.next;
     }
 }
+*/
