@@ -9,6 +9,35 @@
  * }
  */
 
+//  null<-1 <-2<-3 <- 4  null
+// prev:null, 1 , 2, 3
+// curr: 2, 3, 4
+// next: 3, 4 , null
+
+
+class Solution{
+    public ListNode reverseList(ListNode head){
+        if(head == null || head.next == null){
+            return head;
+        }
+        
+        ListNode prev = null;
+        ListNode curr = head;
+        //Input: head = [null<-1<-2<-3<-4<-5 null] 
+        //prev:null, 1, 2, 3, 4, 5
+        //curr: 1, 2, 3 , 4, 5, null
+        //next: 2, 3, 4, 5, null
+        while(curr != null){
+            ListNode next = curr.next;
+            curr.next = prev;
+            
+            prev = curr;
+            curr = next;
+        }
+        
+        return prev;
+    }
+}
 //2023.09.20
 //Time Complexity: O(N)
 //Space Complexity: O(1)
@@ -63,6 +92,7 @@ class Solution{
 //2023-10-09- Recursively - leetcode 의 solution 방식
 //Time Complexity : O(N)
 //Space Complexity: O(N) -  The extra space comes from implicit stack space due to recursion. The recursion could go up to n levels deep.
+/*
 class Solution{
     public ListNode reverseList(ListNode head){
         if(head == null || head.next == null){
@@ -77,7 +107,7 @@ class Solution{
         return reverseHead;
     }
 }
-
+*/
 //2023-10-09- Recursively - 내가 푼 방식 
 //Time Complexity : O(N)
 //Space Complexity: O(N) -  The extra space comes from implicit stack space due to recursion. The recursion could go up to n levels deep.
