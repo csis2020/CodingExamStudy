@@ -21,6 +21,9 @@ class Node {
 };
 */
 
+//Time Complexity: O(N)
+//Space Complexity: O(N)
+/*
 class Solution {
     public Node connect(Node root) {
         if(root == null){
@@ -67,6 +70,41 @@ class Solution {
                 bfsQueue.add(null);
             }
 
+        }
+            
+        return root;
+    }
+}
+*/
+
+
+class Solution {
+    public Node connect(Node root) {
+                if(root == null){
+            return null;
+        }
+         
+        Queue<Node> bfsQueue = new LinkedList<>();
+        bfsQueue.add(root);        
+       
+        while(!bfsQueue.isEmpty()){
+           
+            int size = bfsQueue.size();
+            Node prev = null;
+            for(int i = 0; i < size; i++){
+                Node leave = bfsQueue.remove();
+                if(prev != null){
+                    prev.next = leave;                    
+                }
+                
+                if(leave.left != null){
+                    bfsQueue.add(leave.left);
+                }
+                if(leave.right != null){
+                    bfsQueue.add(leave.right);
+                }   
+                prev = leave;
+            }
         }
             
         return root;
