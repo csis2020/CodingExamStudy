@@ -134,6 +134,7 @@ class Solution {
 */
 // Time Complexity: O(N)
 // Space Complexity: O(1)
+
 class Solution {
     public Node connect(Node root) {
         if(root == null){
@@ -147,23 +148,25 @@ class Solution {
         //leftMost.left:2, null
         //head:1, 2, 3
         //next: 2->3, 4->5->6->7
+        
         while(leftMost.left != null){
-            
             Node head = leftMost;
+            
             while(head != null){
-                
                 if(head.left != null){
                     head.left.next = head.right;
                 }
-
+            
                 if(head.next != null){
-                    head.right.next = head.next.left; 
-                }
+                    head.right.next = head.next.left;
+                } 
                 head = head.next;
             }
             leftMost = leftMost.left;
         }
         
+        
         return root;
     }
 }
+
