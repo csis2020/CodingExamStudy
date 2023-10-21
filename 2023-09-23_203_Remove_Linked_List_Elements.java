@@ -8,6 +8,33 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
+
+//2023-10-15
+//Time Complexity: O(N)
+//Space Complexity: O(1)
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        if(head == null){
+            return null;
+        }
+        
+        ListNode dummy = new ListNode(0, head);
+        ListNode prev = dummy;
+        ListNode curr = dummy.next;
+        
+        while(curr != null){
+            if(curr.val == val){
+                prev.next = curr.next;
+            }else{
+                prev = curr;
+            }
+            curr = curr.next;
+        }
+        
+        return dummy.next;
+    }
+}
+
 //2023-09-23
 //Time Complexity: O(N)
 //Space Complexity: O(1)
@@ -40,6 +67,7 @@ class Solution {
 //  이렇게 하니 코드가 더 깔끔해지네. 
 //Time Complexity: O(N)
 //Space Complexity: O(1)
+/*
 class Solution {
     public ListNode removeElements(ListNode head, int val) {
         
@@ -60,3 +88,32 @@ class Solution {
         return dummyHead.next;
     }
 }
+*/
+
+
+//2023-10-13
+/*
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        if(head == null){
+            return null;
+        }
+        
+        ListNode dummy = new ListNode(0, head);
+        dummy.next = head;
+        
+        ListNode prev = dummy;
+        ListNode curr = dummy.next;
+        while(curr != null){
+            if(curr.val == val){
+                prev.next = curr.next;
+            }else{
+                prev = curr;
+            }
+            curr = curr.next;
+        }
+        
+        return dummy.next;
+    }
+}
+*/
