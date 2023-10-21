@@ -18,6 +18,7 @@
 //idea: Change left <-->right  with iterator
 //TimeComplexity: O(N)
 //Space Complexity: O(D) -> D is tree's diameter (Worse case is N/2 = O(N))
+/*
  class Solution{
      public TreeNode invertTree(TreeNode root){
          if(root == null){
@@ -42,11 +43,12 @@
          return root;
      }
  }
+*/
 
 //idea: Change left <-->right  with recursive function
 //TimeComplexity: O(N)
 //Space Complexity: O(H) , H is recursive stack size = tree height
-/*
+
  class Solution{
      public TreeNode invertTree(TreeNode root){
          if(root == null){
@@ -69,7 +71,7 @@
          dfs(root.right);
      }
  }
-*/
+
 
 
  //2022-11-22
