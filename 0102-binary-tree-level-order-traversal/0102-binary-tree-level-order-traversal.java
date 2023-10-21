@@ -18,6 +18,7 @@
 //Idea1 : BFS -queue 이용
 //Time Complexity: O(N) 
 //Space Complexity: O(D) : D is tree's diameter. Worst case is N/2 = O(N)
+/*
  class Solution{
      public List<List<Integer>> levelOrder(TreeNode root){
          List<List<Integer>> result = new ArrayList<>();
@@ -50,10 +51,46 @@
          return result;
      }
  }
+*/
 
-
-
-
+//Idea2 : DFS -recursive 이용
+//Time Complexity: O(N) 
+//Space Complexity: O(H) : H is tree's height. Worst case is N = O(N)
+ class Solution{
+     public List<List<Integer>> levelOrder(TreeNode root){
+         List<List<Integer>> result = new ArrayList<>();
+         
+         if(root == null){
+             return result;
+         }
+         
+         dfs(root, 0, result);
+         return result;
+     }
+     
+     //[3,9,20,null,null,15,7]
+     //size:0, 1,2,3
+     //level:0, 1,2
+     //result:[[3],[9,20],[15,7]]
+     void dfs(TreeNode root, int level, List<List<Integer>> result){
+         if(root == null){
+             return;
+         }
+         
+         int size = result.size();
+         while(size <= level){
+             result.add(new ArrayList<>());
+             size++;
+         }
+         
+         List<Integer> list = result.get(level);
+         list.add(root.val);
+         
+         dfs(root.left, level+1, result);
+         dfs(root.right, level+1, result);
+         
+     }
+ }
 
 
  //2022-11-22- Recursive 
