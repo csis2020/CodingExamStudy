@@ -18,6 +18,9 @@
 //2023-10-20
 
 //idea1 : DFS - recursive
+//Time Complexity: O(N)
+//Space Complexity: O(H) , H is tree height, worst case is H = N, O(N) <=  node 가 left 로만 있거나 right 로만 있는경우
+/*
 class Solution {
     public boolean isSameTree(TreeNode p, TreeNode q) {
         if(p == null && q == null){
@@ -36,20 +39,48 @@ class Solution {
     }    
     
 }
-
-
-//idea2: BFS - queue
-/*
-class Solution {
-    public boolean isSameTree(TreeNode p, TreeNode q) {
-    }
-}
 */
 
-
-
-
-
+//idea2: BFS - queue
+// Time Complexity : O(N)
+// Space Complexity: O(D) , D is tree's diameter (트리의 가장 넓은 너비)
+class Solution {
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        
+        if(p == null && q == null){
+            return true;
+        }
+        if(p == null || q == null){
+            return false;
+        }
+        
+        Queue<TreeNode> bfs = new LinkedList<>();
+        bfs.add(p);
+        bfs.add(q);
+        while(!bfs.isEmpty()){
+            TreeNode pNode = bfs.remove();
+            TreeNode qNode = bfs.remove();
+            
+            //Null 인경우 처리 필요
+            if(pNode == null && qNode == null){
+                continue;
+            }else if(pNode == null || qNode == null){
+                return false;
+            }
+            
+            if(pNode.val != qNode.val){
+                return false;
+            }
+            
+            bfs.add(pNode.left);
+            bfs.add(qNode.left);
+            bfs.add(pNode.right);
+            bfs.add(qNode.right);
+        }
+        
+        return true;
+    }
+}
 
  //DFS
 //Time Complexity: O(N)
