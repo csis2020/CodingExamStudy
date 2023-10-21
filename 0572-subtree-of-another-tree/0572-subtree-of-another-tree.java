@@ -15,7 +15,14 @@
  */
 
 //2023-10-21
-//Idea1: DFS - recursive <-- 매 노드마다 체크를 해야할듯 
+//Idea1: DFS - recursive <-- 매 노드마다 subTree의 root 와 같은지 체크하고 값이 같으면 sameTree인지 수행. 즉 N x M 의 수행이 이루어지게 됨.  
+//Time Complexity:O(N x M) , N is root의 node 수 , M is subRoot 의 node 수
+//Space Complexity: O(M + N) , 이유는 아래에 
+/*
+There will be at most N recursive call to dfs ( or isSubtree). Now, each of these calls will have M recursive calls to isIdentical. Before calling isIdentical, our call stack has at most 
+O(N) elements and might increase to O(N+M) during the call. After calling isIdentical, it will be back to at most O(N) since all elements made by isIdentical are popped out. Hence, the maximum number of elements in the call stack will be M+N.
+*/
+/*
 class Solution {
     public boolean isSubtree(TreeNode root, TreeNode subRoot) {
         if(root == null && subRoot == null){
@@ -24,13 +31,11 @@ class Solution {
             return false;
         }
         
-        boolean result = false;
         if(root.val == subRoot.val){
             if(isSame(root, subRoot)){
                 return true;
             }
-        }
-        
+        }        
                
        if(isSubtree(root.left, subRoot)){
            return true;
@@ -55,37 +60,60 @@ class Solution {
         return isSame(root.left, subRoot.left) && isSame(root.right, subRoot.right);
     }
 }
-
-
-
-/*
-class Solution {
-    public boolean isSubtree(TreeNode root, TreeNode subRoot) {
-    }
-}
 */
 
+//Idea1: BFS - QUEUE <-- 매 노드마다 체크를 해야할듯 
+//Time Complexity:O(N x M) , N is root의 node 수 , M is subRoot 의 node 수
+//
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+class Solution {
+    public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+        if(root == null || subRoot == null ){
+            return false;
+        }
+        
+        Queue<TreeNode> bfs = new LinkedList<>();
+        bfs.add(root);
+        while(!bfs.isEmpty()){
+            TreeNode leave = bfs.remove();
+            
+            if(leave.val == subRoot.val){
+                if(isSameTree(leave, subRoot)){
+                    return true;
+                }
+            }
+            if(leave.left != null){
+                bfs.add(leave.left);
+            }
+            if(leave.right != null){
+                bfs.add(leave.right);
+            }           
+        }
+        
+        return false;
+    }
+    
+    boolean isSameTree(TreeNode root, TreeNode subRoot){
+        if(root == null && subRoot == null){
+            return true;
+        }else if(root == null || subRoot == null){
+            return false;
+        }
+        
+        if(root.val != subRoot.val){
+            return false;
+        }
+        
+        return isSameTree(root.left, subRoot.left) && isSameTree(root.right, subRoot.right);
+    }
+}
 
 
  //2022-11-23 - iteration
- //Time Complexity: O(NxN) <-- N 은 root tree 의 노드수, M 은 subRoot tree 의 노드수 
+ //Time Complexity: O(NxM) <-- N 은 root tree 의 노드수, M 은 subRoot tree 의 노드수 
  //Space Complexity: O(N+M) 이라고 하네 
  /*
- There will be at most N recursive call to dfs ( or isSubtree). Now, each of these calls will have MMM recursive calls to isIdentical. Before calling isIdentical, our call stack has at most O(N) elements and might increase to O(N+M) during the call. After calling isIdentical, it will be back to at most O(N)since all elements made by isIdentical are popped out. Hence, the maximum number of elements in the call stack will be M+N
+ There will be at most N recursive call to dfs ( or isSubtree). Now, each of these calls will have M recursive calls to isIdentical. Before calling isIdentical, our call stack has at most O(N) elements and might increase to O(N+M) during the call. After calling isIdentical, it will be back to at most O(N)since all elements made by isIdentical are popped out. Hence, the maximum number of elements in the call stack will be M+N
  */
 /*
 class Solution {
