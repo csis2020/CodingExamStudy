@@ -94,7 +94,7 @@ class Solution {
     }
     
     //Queue
-    /*
+
     boolean isSameTree(TreeNode root, TreeNode subRoot){
         
         Queue<TreeNode> bfs = new LinkedList<>();
@@ -114,15 +114,15 @@ class Solution {
                 return false;
             }
             bfs.add(rootNode.left);
-            bfs.add(subRoot.left);
+            bfs.add(subRootNode.left);
             bfs.add(rootNode.right);
-            bfs.add(subRoot.right);
+            bfs.add(subRootNode.right);
         }
         return true;
     }
-    */
-    //recursive
 
+    //recursive
+    /*
     boolean isSameTree(TreeNode root, TreeNode subRoot){
         if(root == null && subRoot == null){
             return true;
@@ -136,7 +136,7 @@ class Solution {
         
         return isSameTree(root.left, subRoot.left) && isSameTree(root.right, subRoot.right);
     }
-
+    */
 }
 
 
