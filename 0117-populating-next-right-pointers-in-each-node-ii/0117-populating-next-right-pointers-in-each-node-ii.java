@@ -24,6 +24,7 @@ class Node {
 //idea1 : bfs using queue
 //Time Complexity: O(N)
 //Space Complexity: O(N)
+/*
 class Solution {
     public Node connect(Node root) {
         
@@ -56,10 +57,9 @@ class Solution {
         return root;
     }
 }
-
+*/
 
 //idea2: Using previously established next pointers
-/*
 class Solution {
     public Node connect(Node root) {
         
@@ -67,8 +67,42 @@ class Solution {
             return null;
         }
         
-        ListNode leftMost = root;
-        while(leftMost != null)
+        Node leftMost = root;
+        
+        //[1,2,3,4,5,null,7]
+        //leftMost: 1, 2,4
+        //head:1,null ,2,3
+        //prev:null, 2, 3,null,4,5
+        //next: 2->3, 4->5->7
+        while(leftMost != null){
+            
+            Node head = leftMost;
+            leftMost = null; //Important! if there is no new leftMost, need to escape while
+            Node prev = null;
+            
+            while(head != null){
+                if(head.left != null){
+                    if(prev == null){
+                        leftMost = head.left; //its left most on this level   
+                    }else{
+                        prev.next = head.left;  
+                    }   
+                    prev = head.left;
+                }
+                
+                if(head.right != null){
+                    if(prev == null){
+                        leftMost = head.right;//its left most on this level  
+                    }else{
+                        prev.next = head.right;
+                    }
+                    prev = head.right;
+                }
+                    
+                head = head.next;
+            }
+        }
+        
+        return root;
     }
 }
-*/
