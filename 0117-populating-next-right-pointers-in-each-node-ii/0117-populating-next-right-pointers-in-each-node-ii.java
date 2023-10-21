@@ -60,6 +60,53 @@ class Solution {
 */
 
 //idea2: Using previously established next pointers
+//Time Complexity: O(N)
+//Space Complexity: O(1)
+class Solution {
+    public Node connect(Node root) {
+        
+        if(root == null){
+            return null;
+        }
+        
+        Node leftMost = root;
+        
+        while(leftMost != null){
+            
+            Node head = leftMost;
+            leftMost = null;
+            Node prev = null;
+            
+            while(head != null){
+                if(head.left != null){
+                    if(prev == null){
+                        leftMost = head.left; //first left node on this level.
+                    }else{
+                        prev.next = head.left;
+                    }
+                    
+                    prev = head.left;
+                }
+                
+                if(head.right!=null){
+                    if(prev == null){
+                        leftMost = head.right; //first left node on this level.
+                    }else{
+                        prev.next = head.right;
+                    }
+                    
+                    prev = head.right;
+                }
+                
+                head = head.next;
+            }
+        }
+        
+        return root;
+    }
+}
+
+/*
 class Solution {
     public Node connect(Node root) {
         
@@ -106,3 +153,4 @@ class Solution {
         return root;
     }
 }
+*/
