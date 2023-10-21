@@ -26,7 +26,7 @@ class Solution {
         
         boolean result = false;
         if(root.val == subRoot.val){
-            if(dfs(root, subRoot)){
+            if(isSame(root, subRoot)){
                 return true;
             }
         }
@@ -41,7 +41,7 @@ class Solution {
         
     }
     
-    boolean dfs(TreeNode root, TreeNode subRoot){
+    boolean isSame(TreeNode root, TreeNode subRoot){
         if(root == null && subRoot == null){
             return true;
         }else if(root == null || subRoot == null){
@@ -52,7 +52,7 @@ class Solution {
             return false;
         }        
         
-        return dfs(root.left, subRoot.left) && dfs(root.right, subRoot.right);
+        return isSame(root.left, subRoot.left) && isSame(root.right, subRoot.right);
     }
 }
 
