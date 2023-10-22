@@ -55,7 +55,7 @@ class Solution {
 }
 */
 
-//idea2 - DFS - recursive with List<> 
+//idea2 - DFS - recursive with List<>  -> List 를 먼저 구성해 놓고 마지막에 max 값을 찾는다.
 class Solution {
     
     public int maxLevelSum(TreeNode root) {
@@ -63,19 +63,14 @@ class Solution {
             return 0;
         }
         
-        List<List<Integer>> sumList = new ArrayList<>();
+        List<Integer> sumList = new ArrayList<>();
         makeSumList(root, sumList, 0);
         
         int maxSum = -100001;
         int maxSumLevel = 0;
         for(int i = 0; i < sumList.size(); i++){
-            List<Integer> list = sumList.get(i);
-            int sum = 0;
-            for(int j = 0; j < list.size(); j++){
-                sum += list.get(j);
-            }
-            if(sum > maxSum){
-                maxSum = sum;
+            if(sumList.get(i) > maxSum){
+                maxSum = sumList.get(i);
                 maxSumLevel = i + 1;
             }
         }
@@ -83,16 +78,16 @@ class Solution {
         return maxSumLevel;
     }
     
-    void makeSumList(TreeNode root, List<List<Integer>> sumList, int depth){
+    void makeSumList(TreeNode root, List<Integer> sumList, int depth){
         if(root == null){
             return;
         }
         
         if(sumList.size() == depth){
-            List<Integer> list = new ArrayList<>();
-            sumList.add(list);
+            sumList.add(root.val);
+        }else{
+            sumList.set(depth, sumList.get(depth)+root.val);            
         }
-        sumList.get(depth).add(root.val);
         makeSumList(root.left, sumList, depth+1);
         makeSumList(root.right, sumList, depth+1);        
     }
