@@ -16,6 +16,8 @@
 
 //2023-10-21
 //idea: BFS using Queue
+//Time Complexity: O(N)
+//Space Complexity:O(D)  , D is tree's diameter. the worst case is O((N+1)/2) = O(N)
 class Solution {
     public int maxLevelSum(TreeNode root) {
         if(root == null){
