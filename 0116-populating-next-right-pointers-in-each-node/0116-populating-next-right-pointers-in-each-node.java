@@ -21,6 +21,41 @@ class Node {
 };
 */
 
+//[1]->[2,3]->[3,4,5]->[4,5,6,7]
+//Time Complexity: O(N)
+//Space Complexity: O(N) <-- queue's maximum size would be maximum width of tree. => full binary tree's bottom width = (n+1)/2 -> Worst case is O(N)
+class Solution {
+    public Node connect(Node root) {
+        if(root == null){
+            return null;
+        }
+        
+        Queue<Node> bfs = new LinkedList<>();
+        bfs.add(root);
+        while(!bfs.isEmpty()){
+            int size = bfs.size();
+            Node prev = null;
+            for(int i = 0; i < size; i++){
+                Node node = bfs.remove();
+                if(prev != null){
+                    prev.next = node;
+                }
+                
+                if(node.left != null){
+                    bfs.add(node.left);
+                }
+                if(node.right != null){
+                    bfs.add(node.right);
+                }
+                prev = node;
+            }
+        }
+        return root;
+    }
+}
+
+
+
 //Queue 에 null 을 안쓰고 하는 경우 
 //Time Complexity: O(N)
 //Space Complexity: O(N)
@@ -117,6 +152,7 @@ class Solution {
 */
 
 //idea2:  Using previously established next pointers (leetcode solution)
+// 이 문제에 한해서는 이 방법이 가장 최적의 solution 임. 
 // (궁금증: full binary tree 라서 가능한 솔루션일까??? )
 /*
  leftmost = root
@@ -134,7 +170,7 @@ class Solution {
 */
 // Time Complexity: O(N)
 // Space Complexity: O(1)
-
+/*
 class Solution {
     public Node connect(Node root) {
         if(root == null){
@@ -169,4 +205,4 @@ class Solution {
         return root;
     }
 }
-
+*/
