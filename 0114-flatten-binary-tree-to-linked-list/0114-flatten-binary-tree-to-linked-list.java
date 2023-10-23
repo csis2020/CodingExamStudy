@@ -18,7 +18,7 @@
 //  leetcode Discuss 에 있던 best 답을 참조함. 
 //Time Complexity: O(N)
 //Space Complexity: O(H) - H is tree's height, recursive call stack size, the worse case is H = N, O(N)
-/*
+
 class Solution {
     
     TreeNode preNode = null;
@@ -37,10 +37,10 @@ class Solution {
     }    
     
 }
-*/
+
 
 //idea2 : recursive call - using postorder(왼쪽노드부터 시작) 
-
+/*
 class Solution {
     
     public void flatten(TreeNode root) {
@@ -73,7 +73,7 @@ class Solution {
         return rightEnd != null ? rightEnd : leftEnd;
     }
 }
-
+*/
 
 //아래는 leetcode sulution 에서 T.C 가 O(N), S.C 가 O(1) 인 솔루션이다. 
 //이해는 잘 못했음. 나중에 다시 봐야함. 
