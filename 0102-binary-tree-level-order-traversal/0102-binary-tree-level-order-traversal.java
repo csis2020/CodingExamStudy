@@ -14,6 +14,41 @@
  * }
  */
 
+
+//2023-10-22
+//[3]->[9,20]-> [15, 7] ->[]
+//list:[[3], [9,20], [15,7]]
+//Time Complexity:O(N)
+//Space Comleixty:O(N) , worst case of queue size is maximus width of tree. full binary tree's bottom level = (n+1)/2 -> O(N)
+ class Solution{
+     public List<List<Integer>> levelOrder(TreeNode root){
+         List<List<Integer>> result = new ArrayList<>();
+         if(root == null){
+             return result;
+         }
+         
+         Queue<TreeNode> bfs = new LinkedList<>();
+         bfs.add(root);
+         while(!bfs.isEmpty()){
+             int size = bfs.size();
+             List<Integer> list = new ArrayList<>();
+             for(int i = 0; i <size; i++){
+                 TreeNode node = bfs.remove();
+                 list.add(node.val);
+                 if(node.left != null){
+                     bfs.add(node.left);
+                 }
+                 if(node.right != null){
+                     bfs.add(node.right);
+                 }
+             }
+             result.add(list);
+         }
+         
+         return result;
+     }
+ }
+
 //2023-10-21 
 //Idea1 : BFS -queue 이용
 //Time Complexity: O(N) 
@@ -56,6 +91,7 @@
 //Idea2 : DFS -recursive 이용
 //Time Complexity: O(N) 
 //Space Complexity: O(H) : H is tree's height. Worst case is N = O(N)
+/*
  class Solution{
      public List<List<Integer>> levelOrder(TreeNode root){
          List<List<Integer>> result = new ArrayList<>();
@@ -91,7 +127,7 @@
          
      }
  }
-
+*/
 
  //2022-11-22- Recursive 
 //Time Complexity: O(N) 
