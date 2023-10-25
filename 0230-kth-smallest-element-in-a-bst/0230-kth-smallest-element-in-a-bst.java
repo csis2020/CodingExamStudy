@@ -18,6 +18,8 @@
 //중요! 그냥 Binary tree 가 아니라 BST임! (Binary Search Tree) 는 Left child 가 root 보다 작고, Right child 가 root 보다 크다. Left child 내에서도 이게 반복됨. 중요한 점은, left sub tree 의 모든 node 값은 전체 트리의 root 보다 작음. right sub tree 의 모든 node 는 전체트리 root 보다 큼. 
 
 //idea 1: iterative inorder traversal - Stack
+//내가 만든 Stack 솔루션
+/*
 class Solution {
     public int kthSmallest(TreeNode root, int k) {
         if( root == null || k <= 0){
@@ -47,15 +49,71 @@ class Solution {
         return -1;
     }
 }
-
-//idea 2: recursive call inorder traversal
+*/
+//leetcode 보고 참고해서 update한 stack solution 
 /*
 class Solution {
     public int kthSmallest(TreeNode root, int k) {
+        if( root == null || k <= 0){
+            return -1;
+        }
         
+        Stack<TreeNode> stack = new Stack<>();
+        int count  = 0;
+        stack.push(root);
+        
+        while(!stack.isEmpty()){
+            
+            while(root != null){
+                if(root.left != null){
+                    stack.push(root.left);
+                }
+                root = root.left;
+            }
+            
+            TreeNode node = stack.pop();
+            count++;
+            if(count == k){
+                return node.val;
+            }
+            root = node.right;
+        }
+        
+        return -1;
     }
 }
 */
+
+//idea 2: recursive call inorder traversal (left -root - right 순으로 값이 커짐)
+class Solution {
+    
+    int count = 0;
+    public int kthSmallest(TreeNode root, int k) {
+        if(root == null || k <= 0){
+            return -1;
+        }
+        
+       return dfs(root, k);
+    }
+    
+    int dfs(TreeNode root, int k){
+        if(root == null){
+            return -1;
+        }
+        
+        int result = dfs(root.left, k);
+        if(result < 0){
+            count++;
+            if(count == k){
+               return root.val;
+            }
+            result = dfs(root.right, k);
+        }
+
+        return result;
+    }
+}
+
 
  //2022-11-29
  //Time Complexity: O(N + K)
