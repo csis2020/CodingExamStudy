@@ -18,7 +18,7 @@
 //Idea: using BFS with Queue
 //Time Complexity: O(N)
 //Space Complexity: O(N) <-- the worst case is the full binary tree's bottom width = (N+1)/2 => O(N)
-/*
+
 class Solution {
     public List<Integer> largestValues(TreeNode root) {
         List<Integer> list = new ArrayList<>();
@@ -50,11 +50,12 @@ class Solution {
         
     }
 }
-*/
+
 
 //Idea: using DFS (preorder traversal) using recursive call
 //Time Complexity: O(N)
-//Space Complexity: O(N) <-- the worst case is the skewed tree ( the tree only has left nodes or only has right nodes.  ->O(N) )
+//Space Complexity: O(N) <-- It is tree's height. the average is O(logN).  the worst case is the skewed tree ( the tree only has left nodes or only has right nodes.  ->O(N) )
+/*
 class Solution {
     public List<Integer> largestValues(TreeNode root) {
         List<Integer> list = new ArrayList<>();
@@ -84,3 +85,4 @@ class Solution {
         
     }
 }
+*/
