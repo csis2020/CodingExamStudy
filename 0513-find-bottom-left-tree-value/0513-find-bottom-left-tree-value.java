@@ -18,7 +18,7 @@
 //idea : BFS using queue - 단, right node , left node 순으로 queue 에 넣기
 //Time Complexity: O(N)
 //Space Complexity: O(N) - tree's max width - the worst case: (N+1)/2
-/*
+
 class Solution {
     public int findBottomLeftValue(TreeNode root) {
         if(root == null){
@@ -46,11 +46,12 @@ class Solution {
         return btmLeftValue;
     }
 }
-*/
+
 
 //idea2: DFS using recursive call - postorder traversal (left-right-root 순으로 )
 //Time Complexity: O(N)
 //Space Complexity: O(N) : tree's height - the average case is O(logN), the worst case is O(N)
+/*
 class Solution {
     int maxLevel = 0;
     int bottomLeftValue = Integer.MIN_VALUE;
@@ -77,3 +78,4 @@ class Solution {
         dfs(root.left, level+1);
     }
 }
+*/
