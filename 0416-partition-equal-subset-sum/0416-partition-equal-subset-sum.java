@@ -44,7 +44,7 @@ class Solution {
 //idea1 의 경우를 보면 같은 값을 또 체크하는 경우가 생김, 이것을 table 에 저장 
 //Time Complexity: O(MxN) , In the worst case where there is no overlapping calculation => MxN
 //Space Complexity: O(MxN) , recursive call stack  O(N) + memoization O(MxN) => O(MxN)
-
+/*
 class Solution {
     public boolean canPartition(int[] nums) {
         if(nums == null || nums.length <= 0){
@@ -80,7 +80,7 @@ class Solution {
         return memo[index][sum];
     }
 }
-
+*/
 //idea3 - dynamic programming using memoizaion (MxN array table)
 //idea2 memoization 이  recursive call 필요없이 iteration 으로 가능함. 
 //Dynamic programming 식은 idea2 의 recursive call 로부터 얻어낼수 있음. 
@@ -191,7 +191,7 @@ class Solution {
 
 //Time Complexity: O(MxN) , We iteratively calculate  MxN times.
 //Space Complexity:  O(M) , memoization 길이가 M 인 1차원 array
-/*
+
 class Solution {
     public boolean canPartition(int[] nums) {
         if(nums == null || nums.length <= 0){
@@ -226,4 +226,3 @@ class Solution {
         return dp[totalSum]; //recursive call 에서 recursiveCheck(nums, 0, totalSum) 한것과 같은 결과        
     }
 }
-*/
