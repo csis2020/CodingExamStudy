@@ -1,9 +1,10 @@
 
 
 //2023-11-03
-//Idea : using HashMap<key, value> : key is nums[i], value is frequency
+//Idea1 : using HashMap<key, value> : key is nums[i], value is frequency
 //Time Complexity: O(N)
 //Space Complexity: O(N)
+/*
 class Solution {
     public int majorityElement(int[] nums) {
         if(nums == null || nums.length <= 0){
@@ -24,5 +25,20 @@ class Solution {
         }
         
         return maxNumber;
+    }
+}
+*/
+
+//Idea2 : Sorting 
+//Time Complexity: O(NlogN)
+//Space Complexity: O(1)
+class Solution {
+    public int majorityElement(int[] nums) {
+        if(nums == null || nums.length <= 0){
+            return Integer.MIN_VALUE;
+        }
+        
+        Arrays.sort(nums); // ascending order
+        return nums[nums.length/2];
     }
 }
