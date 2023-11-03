@@ -49,7 +49,7 @@ class Solution {
 // 이 방법은 Majority element 가 n/2 보다 많은 경우 성립함. ( the number of majority > n/2)  , the  number of majority = n/2 이거나 n/2 보다 작으면 성립 안됨. (ex. [2,1,3,1])
 //Time Complexity: O(N)
 //Space Complexity: O(1)
-/*
+
 class Solution {
     public int majorityElement(int[] nums) {
         if(nums == null || nums.length <= 0){
@@ -71,13 +71,13 @@ class Solution {
         return majorityNum;
     }
 }
-*/
+
 //Idea4: Bit manipulation 
 //  각 배열의 요소들이 -10^9 ~ 10^9 범위인 것은 32bit integer 이니까 각 요소값들의 1~32bit 에 1 이 n/2 보다 많으면 majority number 의 bit 값임. 그걸 다 더하면 됨. 
 // nums=[1,1,-1,-1,-1]  인경우 체크해볼것
 //Time Complexity: O(N) <-- 32 * N => O(N)
 //Space Complexity: O(1)
-
+/*
 class Solution {
     public int majorityElement(int[] nums) {
         if(nums == null || nums.length <= 0){
@@ -106,7 +106,7 @@ class Solution {
         return majorityNum;
     }
 }
-
+*/
 
 
 
