@@ -2,14 +2,43 @@
 
 
 //2023-11-03
-//idea:  560. Subarray Sum Equals K , 523. Continuous Subarray Sum 과 유사 ???
+//누적합을 이용하여 푸는 문제 + alpah
+//idea:  560. Subarray Sum Equals K , 523. Continuous Subarray Sum 과 유사하나 divisible 이라는 점에서 다르게 접근해야함. modular 연산의 결과를 저장.
 //   
-/*
+
 class Solution{
     public int subarraysDivByK(int[] nums, int k){
+        if(nums == null || nums.length <= 0 || k <= 1){
+            return 0;
+        }
+        
+        int sum = 0;
+        int[] mod = new int[k]; //save the number of modular
+        mod[0] = 1; //save for the following example cases: nums=[5],k=5 or nums=[1,4],k=5
+        int totalCount = 0;
+        
+        for(int i = 0; i < nums.length; i++){
+            sum += nums[i];
+            int remainder = sum % k;
+            //만약 nums[i] 가 음수값인 경우, sum이 음수가되어, remainder 가 음수가 될수도 있다. 
+            //아래처럼 처리하거나, 
+            //만약 음수/양수 상관없이 늘 같은 수식을 쓰고싶으면 remainder = (sum %k +k)%k 로 해도 됨. 
+            if(remainder < 0){
+                remainder += k;  
+            }
+            totalCount += mod[remainder]; //만약 해당 remainder 가 존재하지 않는다면 '0' 이 더해질 것임.
+            mod[remainder]++;
+        }
+        
+        return totalCount;
     }
 }
-*/
+
+
+//누적합 이용 - leetcode 의 솔루션
+//Time Complexity: O(N)
+//Space Complexity: O(K)
+/*
 class Solution {
     public int subarraysDivByK(int[] nums, int k) {
         int n = nums.length;
@@ -31,7 +60,7 @@ class Solution {
         return result;
     }
 }
-
+*/
 
 
 
