@@ -18,6 +18,19 @@ class Solution {
             return false;
         }
         int targetSum = totalSum / k;
+        //descending order 로 정렬하면 backtracking 의 time 을 줄일수 있다. 
+        //if(currentSum > targetSum)인경우를 더 빨리 찾게됨.
+        Arrays.sort(nums); //int[] 의 개별요소들은 int 의 primitive 타입이라 Arrays.sort(arr, (a,b)->(b-a));를 쓸수 없음. a,b 가 Object 이어야함.
+        int start = 0;
+        int end = nums.length -1;
+        while(start < end){
+            int temp = nums[end];
+            nums[end] = nums[start];
+            nums[start] = temp;
+            start++;
+            end--;
+        }
+        
         return backtracking(nums, k, 0, 0, targetSum, checked);
     }
     
@@ -43,6 +56,7 @@ class Solution {
                 continue;
             }
             checked[i] = true;
+            //여기서는 현재 subset 에 들어갈 nums[i] 를 찾는 것이라서 k 를 그대로 사용.
             if(backtracking(nums, k, i+1, currentSum +nums[i], targetSum, checked )){
                 return true;
             }
