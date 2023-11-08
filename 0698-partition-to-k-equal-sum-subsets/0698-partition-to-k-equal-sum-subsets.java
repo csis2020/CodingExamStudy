@@ -2,7 +2,7 @@
 //Backtracking ( 백트래킹은 모든 경우의 수를 고려하여 해를 찾는 방식입니다. 이름에서 유추할 수 있듯이, 퇴각 검색(추적)이라는 의미를 갖습니다. 즉, 해를 찾기 위해서 후보군을 나열하고, 제약 조건을 점진적으로 체크합니다. 만약 조건에 맞지않다면, 뒤로 돌아와서(backtrack), 바로 다음 후보군으로 넘어갑니다. 백트래킹에서 검색할 후보들을 상태 공간 트리(State Space Tree)로 표현합니다.)
 
 //example: 문제 예제뿐아니라 nums=[2,2,2,2,3,4,5], k=4  에 대해서도 해볼것
-/*
+
 class Solution {
     public boolean canPartitionKSubsets(int[] nums, int k) {
         if(nums == null || nums.length <= 0 || k <= 0){
@@ -66,12 +66,12 @@ class Solution {
         return false;
     }
 }
-*/
+
 
 //Back tracking : leetcode 의 솔루션 
 //Time complexity: O(k⋅2^N).
 //Space complexity: O(N).
-
+/*
 class Solution {
     private boolean backtrack(int[] arr, int index, int count, int currSum, int k, 
                               int targetSum, boolean[] taken) {
@@ -146,3 +146,4 @@ class Solution {
         return backtrack(arr, 0, 0, 0, k, targetSum, taken);
     }
 }
+*/
