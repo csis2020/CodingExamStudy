@@ -4,6 +4,7 @@
 // 바로 아래 recursive call 로 한것이  Time Limit Exceeded 가 나서 iteration 으로 변경함 
 // Time Complexity: O(n*m) n:amount , m: coins.length
 // Space Complexity : O(n) n: amount
+/*
 class Solution{
     public int coinChange(int[] coins, int amount){
         if(coins == null || coins.length <= 0 || amount <= 0){
@@ -32,43 +33,46 @@ class Solution{
         return dp[amount] == amount+1 ? -1 : dp[amount];
     }
     //아래는 dp[]를 -1 로 채운경우
-    /*
-    public int coinChange(int[] coins, int amount){
-        if(coins == null || coins.length <= 0 || amount <= 0){
-            return 0;
-        }
+    
+    //public int coinChange(int[] coins, int amount){
+    //    if(coins == null || coins.length <= 0 || amount <= 0){
+    //        return 0;
+    //    }
         
-        int[] dp = new int[amount+1];
-        Arrays.fill(dp, -1);
-        dp[0] = 0;
-        for(int i = 0; i < coins.length; i++){
-            if(coins[i] <= amount){
-                dp[coins[i]] = 1;  
-            }
-        }
+    //    int[] dp = new int[amount+1];
+    //    Arrays.fill(dp, -1);
+    //    dp[0] = 0;
+    //    for(int i = 0; i < coins.length; i++){
+    //        if(coins[i] <= amount){
+    //            dp[coins[i]] = 1;  
+    //        }
+    //    }
         
-        for(int i = 1; i <=amount; i++){
-            for(int j = 0; j < coins.length; j++){
-                int money = i - coins[j];
-                if(money >= 0 && dp[money] != -1){
-                    if(dp[i] < 0){
-                        dp[i] = dp[money] +1;
-                    }else{
-                        dp[i] = Math.min(dp[i], dp[money] + 1);
-                    }
-                }
-            }
-        }
+    //    for(int i = 1; i <=amount; i++){
+    //        for(int j = 0; j < coins.length; j++){
+    //            int money = i - coins[j];
+    //            if(money >= 0 && dp[money] != -1){
+    //                if(dp[i] < 0){
+    //                    dp[i] = dp[money] +1;
+    //                }else{
+    //                    dp[i] = Math.min(dp[i], dp[money] + 1);
+    //                }
+    //            }
+    //        }
+    //    }
         
-        return dp[amount];
-    }
-    */
+    //    return dp[amount];
+    //}
+    
 }
-
+*/
 //2023-11-10
 //Dynamic programming
-//아래처럼 하니까 예제는 잘도는데, 제출하면 Time Limit Exceeded 가 남. 왜일까??? recursive call 로 하면 시간이 많이 걸리나보다...
+//아래처럼 하니까 예제는 잘도는데, 제출하면 Time Limit Exceeded 가 남.
+//      ex) coins=[186,419,83,408], amount=6249  의 경우 Time Limit Exceeded
+//왜일까??? 아래 코드에 설명 달아 놓음. 
 /*
+//[Time Limit Exceeded 버전]
 class Solution{
     public int coinChange(int[] coins, int amount){
         if(coins == null || coins.length <= 0 || amount <= 0){
@@ -76,20 +80,18 @@ class Solution{
         }
         
         int[] dp = new int[amount+1];
-        Arrays.fill(dp, -1);
+        Arrays.fill(dp, -1); 
         dp[0] = 0;   
         return recursiveCheck(coins, amount, dp);
+        //return result==(amount+1)? -1 : result;
     }
     
     int recursiveCheck(int[] coins, int amount, int[] dp){
         if(amount < 0){
             return -1;
         }
-        //if(amount == 0){
-        //    return 1;
-        //}
         
-        if(dp[amount] >= 0){
+        if(dp[amount] >= 0){ //이렇게 하면  coins=[3,5], amount:4 와 같은경우 dp[4]=-1 로 결정이 되었음에도 불구하고, 결정안되것으로 고려되어 아래 코드를 계속 수행하게됨. amount 가 큰 수인경우 반복되는 체크로 인해 time limit exceeded 나게됨.  => 즉, 아직 체크가 되지 않은default 상태인경우와,  만들수있는 coin 수를 찾을수 없는 경우에 대한 구별이 필요함. 
             return dp[amount];
         }
         
@@ -110,6 +112,48 @@ class Solution{
     }
 }
 */
+//[Time Limit Exceeded 나지 않도록 수정한 버전]
+class Solution{
+    public int coinChange(int[] coins, int amount){
+        if(coins == null || coins.length <= 0 || amount <= 0){
+            return 0;
+        }
+        
+        int[] dp = new int[amount+1]; //default is '0'
+
+        return recursiveCheck(coins, amount, dp);
+    }
+    
+    int recursiveCheck(int[] coins, int amount, int[] dp){
+        if(amount < 0){
+            return -1;
+        }
+        
+        if(amount == 0){
+            return 0;
+        }
+        
+        if(dp[amount] != 0){  // dp[amount] >0 이면 coin 개수, dp[amount]= -1 이면 해당 amount 를 만들수있는 coin 이없음. 
+            return dp[amount];
+        }
+        
+        int minCount = Integer.MAX_VALUE;
+        for(int i = 0; i < coins.length; i++){
+            int count = recursiveCheck(coins, amount - coins[i], dp);
+            if(count >= 0){
+                minCount = Math.min(minCount, count + 1);
+            }
+        }
+        
+        if(minCount != Integer.MAX_VALUE){
+            dp[amount] = minCount;
+        }else{
+            dp[amount] = -1;
+        }
+        
+        return dp[amount];  
+    }
+}
 
 //2023.Septemmber.1
 //limitation : if clins array is ascending order? => maybe not, 
