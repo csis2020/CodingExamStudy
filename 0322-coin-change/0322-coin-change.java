@@ -1,7 +1,38 @@
 
 //2023-11-10
 //Dynamic Programming
+// 바로 아래 recursive call 로 한것이  Time Limit Exceeded 가 나서 iteration 으로 변경함 
+// Time Complexity: O(n*m) n:amount , m: coins.length
+// Space Complexity : O(n) n: amount
 class Solution{
+    public int coinChange(int[] coins, int amount){
+        if(coins == null || coins.length <= 0 || amount <= 0){
+            return 0;
+        }
+        
+        int[] dp = new int[amount+1];
+        Arrays.fill(dp, amount+1); //amount is max number, 'amount+1' means 'no data' 
+        dp[0] = 0;
+        //아래는 해도 되고 안해도 되고 속도에 큰 영향이 없는듯. 
+        for(int i = 0; i < coins.length; i++){
+            if(coins[i] <= amount){
+                dp[coins[i]] = 1;  
+            }
+        }
+        
+        for(int i = 1; i <=amount; i++){
+            for(int j = 0; j < coins.length; j++){
+                int money = i - coins[j];
+                if(money >= 0 && dp[money] != (amount+1)){
+                    dp[i] = Math.min(dp[i], dp[money] + 1);
+                }
+            }
+        }
+        
+        return dp[amount] == amount+1 ? -1 : dp[amount];
+    }
+    //아래는 dp[]를 -1 로 채운경우
+    /*
     public int coinChange(int[] coins, int amount){
         if(coins == null || coins.length <= 0 || amount <= 0){
             return 0;
@@ -31,11 +62,12 @@ class Solution{
         
         return dp[amount];
     }
+    */
 }
 
 //2023-11-10
 //Dynamic programming
-//아래처럼 하니까 Time Limit Exceeded 가 남. 왜일까???
+//아래처럼 하니까 예제는 잘도는데, 제출하면 Time Limit Exceeded 가 남. 왜일까??? recursive call 로 하면 시간이 많이 걸리나보다...
 /*
 class Solution{
     public int coinChange(int[] coins, int amount){
@@ -78,31 +110,6 @@ class Solution{
     }
 }
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //2023.Septemmber.1
 //limitation : if clins array is ascending order? => maybe not, 
