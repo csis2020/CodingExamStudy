@@ -2,6 +2,7 @@
 //2023-11-03
 //idea:  560. Subarray Sum Equals K 와 유사 - Using HashMap
 //      다른 점은 560 에서는 sum -k 를 key 로 찾았다면, 여기선 sum % k 를 찾음 (sub array 가 multiple of K 이니까 )
+//For example, array=[23,2,4] -> sum=[23,25,29] -> sum%k =[5,1,5] if we can find sum of subarray which has same remainder by k, it means the subarray is divided by k. ( 29 - 23 = 6 , Their remainder is same as 5)
 // Time Complexity: O(N)
 // Space Complexity: O(min{N,K}) <--The size of a hash map does not exceed nums.length+1. It also does not exceed k because there are only k possible remainders.
 
