@@ -1,3 +1,47 @@
+//2024-02-24
+//idea: HashSet + sliding window
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        if(s == null || s.length () <= 0){
+            return 0;
+        }
+
+        HashSet<Character> dictSet = new HashSet<>();
+
+        int longest = 0;
+        int left = 0;
+
+        //s = "abcabcbb"
+        //(l, r): (0,0),(0,1),(0,2),(0,3),(1,3),(1,4),(2,4),(2,5),(3,5)(5,6),(6,6)
+        //dictSet: (a),(a,b),(a,b,c)(a,b,c)(a,b,c)(b,c)(b,c)(b)
+        //longest:0,1,2,3,3,3,3
+
+        //s = "pwwkew"
+        //(1,r): (0,0),(0,1),(2,2),(2,3),(2,4)   (3,5)
+        //dictSet:(p), (p,w) (w)   (w,k) (w,k,e)
+        //longest: 1,   2,    2,    2,   3
+        for(int right = 0; right < s.length(); right++){
+            char ch = s.charAt(right);
+            if(dictSet.contains(ch)){
+                while(left <= right){
+                    char leftCh = s.charAt(left);
+                    left++;
+                    if(leftCh == ch){
+                        break;
+                    }
+                    dictSet.remove(leftCh);
+                }
+            }else{
+                dictSet.add(ch);
+                longest = Math.max(longest, right - left +1);
+            }
+                        
+        }
+
+        return longest;
+    }
+}
+
 //leetcode - solution #2
 //time complexity: O(n) , space complexity : O(m) : m is the number of character set.(최대 128)
 //input: abbca -> output: 3 (bca)
@@ -6,7 +50,10 @@
 //input: abba -> output: 2 ( ab or ba)
 
 //2023-09-26
-//sliding window : Using HashSet
+//sliding window - Using HashSet
+//Time Complexity: O(N) - N은 String 길이 
+//Space Complexity: O(M) -M은 독립적인캐릭터 개수, 최대 128 (letter, digit, symbol, space ...) 
+/*
 public class Solution{
     public int lengthOfLongestSubstring(String s){
         if(s == null || s.length() <= 0){
@@ -28,6 +75,7 @@ public class Solution{
                 if(index >= start){ // if the repeating characters is within boundary of(start -end)
                     start = index + 1;
                 }
+                //위 3줄을 start = Math.max(start, index); 로 바꿀수 있다. 
             }
             charMap.put(ch, end);
             longest = Math.max(longest, end - start +1);
@@ -35,6 +83,7 @@ public class Solution{
         return longest;
     }
 }
+*/
 //2023-01-25
 //Similar question: 1695. Maximum Erasure Value
 //[idea] : Using HashMap- <key, value> = <character, position>
